@@ -17,6 +17,8 @@ import static klasyokna.typPracownika.*;
 //zawartość okna ala <body> w html
 public class Kasyno extends JPanel {
 
+    Color myOrange = new Color(255,165,0);
+
     LinkedList<Pracownik> listaPracownikow = new LinkedList<>(); //bedzie dwoch
     LinkedList<Klient> listaKlientow = new LinkedList<>();
     LinkedList<SwingWorkerKlienta> ruszajacyKlienci = new LinkedList<>();
@@ -24,9 +26,11 @@ public class Kasyno extends JPanel {
 
     Kolejki kolejki;
 
-    final BufferedImage background = ImageIO.read(this.getClass().getResource("/res/tlo2.png"));
+    //problematyczne do otwarcia, wymienione na rysowanie przez program
+    //final BufferedImage background = ImageIO.read(this.getClass().getResource("/res/tlo2.png"));
 
-    public Kasyno() throws IOException {
+
+    public Kasyno(){
         listaPracownikow.add(new Pracownik(530, 605, kasjer));
         listaPracownikow.add(new Pracownik(325, 75, pokerzysta));//zabraklo czasu na dodanie stolika do pokera wiec tylko naprawia kabiny
 
@@ -89,7 +93,11 @@ public class Kasyno extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, 0, 0, 700, 700, null);
+
+        rysujTlo(g);
+        //g.drawImage(background, 0, 0, 700, 700, null); //problematyczne do otwarcia
+
+
         Graphics2D g2d = (Graphics2D)g;
         g.setColor(Color.DARK_GRAY);
         g.fillRect(500,600,25,50); //kasa
@@ -130,5 +138,25 @@ public class Kasyno extends JPanel {
             int d = m.getDiameter();
             g.fillRect(x,y,d,d);
         }
+    }
+
+    private void rysujTlo(Graphics g) {
+        //tlo
+        g.setColor(Color.WHITE);
+        g.fillRect(0,0,700,700);
+
+        //pietra kasyna/sali gier
+        g.setColor(myOrange);
+        g.fillRect(50,50, 600, 400);
+        g.fillRect(50, 500, 600, 150);
+
+        //schody (aka waskie gardlo)
+        g.setColor(Color.gray);
+        g.fillRect(300, 450, 100, 50);
+
+        //wejscie i wyjscie
+        g.setColor(Color.BLACK);
+        g.fillRect(50, 500, 20, 50);
+        g.fillRect(50, 600, 20, 50);
     }
 }
